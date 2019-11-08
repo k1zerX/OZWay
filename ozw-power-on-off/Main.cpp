@@ -214,7 +214,7 @@ void OnNotification
 
 void SetValue(bool value)
 {
-    int nodeid = 50;
+    int nodeid = 8;
     pthread_mutex_lock( &g_criticalSection );
     for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
     {

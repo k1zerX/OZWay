@@ -12,8 +12,9 @@ IFLAGS   = -I $(SRCDIR)                \
            -I $(SRCDIR)value_classes
 LIBS     = -lopenzwave \
            -lpthread
-LDFLAGS   = -L/usr/local/lib -Wl,-R/usr/local/lib '-Wl,-R$$ORIGIN' -L$(OZWAY)
+LDFLAGS  = -L/usr/local/lib -Wl,-R/usr/local/lib '-Wl,-R$$ORIGIN' -L$(OZWAY)
 CFLAGS   = -std=c++11
+LIBFILE  = libopenzwave.so.1.6
 
 all: ozway_lib $(OUT)
 
@@ -28,9 +29,10 @@ $(OBJ): %.o: %/Main.cpp
 ozway_lib:
 	echo "making lib"
 	$(MAKE) -C $(OZWAY)
+	cp $(OZWAY)/$(LIBFILE) ./
 
 clean:
 	rm -rf *.o *.out
+	rm -f $(LIBFILE)
 
 re: clean all
-
