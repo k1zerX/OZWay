@@ -226,14 +226,16 @@ void SetValue(bool value)
 	    ValueID v = *it2;
 	    if( v.GetCommandClassId() == 0x25)
 	    {
-		bool* status;
-		printf("\n Setting Node %d to %s ",
+		bool status;
+		printf("\n Setting Node %d to %s \n",
 		       nodeInfo->m_nodeId,
 		       value ? "On" : "Off");
 		Manager::Get()->SetValue(v, value);
-		printf("\n Node %d is now %s \n",
+		sleep(1);
+		Manager::Get()->GetValueAsBool(v, &status);
+		printf("Node %d is now %s \n",
 		       nodeInfo->m_nodeId,
-		       Manager::Get()->GetValueAsBool(v, status) ? "ON" : "OFF");
+		       status ? "ON" : "OFF");
 
 		break;
 	    }
