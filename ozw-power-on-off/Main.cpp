@@ -214,7 +214,7 @@ void OnNotification
 
 void SetValue(bool value)
 {
-    int nodeid = 8;
+    int nodeid = 2;
     pthread_mutex_lock( &g_criticalSection );
     for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
     {
@@ -261,7 +261,7 @@ int main(int argc, char* argv[])
     printf("\n Creating Options \n");
 
 
-    Options::Create( "/home/alexander/WORKSHOP/open-zwave", "./meta/", "" );
+    Options::Create( "/home/aamzwave/OZWay", "./meta/", "" );
     Options::Get()->AddOptionInt( "SaveLogLevel", LogLevel_Detail );
     Options::Get()->AddOptionInt( "QueueLogLevel", LogLevel_Debug );
     Options::Get()->AddOptionInt( "DumpTrigger", LogLevel_Error );
@@ -277,11 +277,10 @@ int main(int argc, char* argv[])
 
     printf("\n Creating Manager \n");
 
-    Manager* manager = Manager::Create();
-    manager->AddWatcher( OnNotification, NULL );
-    manager->AddDriver( port );
-    // Manager::Get()->AddWatcher( OnNotification, NULL );
-    // Manager::Get()->AddDriver( port );
+    Manager::Create();
+    Manager::Get()->AddWatcher( OnNotification, NULL );
+    Manager::Get()->AddDriver( port );
+
 
     // Release the critical section
     pthread_cond_wait( &initCond, &initMutex );
@@ -289,7 +288,7 @@ int main(int argc, char* argv[])
     printf("\n Starting On/Off Program \n");
 
     // loop to switch on/off every 5 seconds
-    for (int i = 0; i < 5; i++ )
+    for (int i = 0; i < 1; i++ )
     {
       printf("\n Loop %i \n ====== \n", i+1 );
       SetValue(true);

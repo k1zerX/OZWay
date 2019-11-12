@@ -64,6 +64,9 @@
 #include "value_classes/ValueString.h"
 #include "value_classes/ValueBitSet.h"
 
+#include "../../libzway/ZWayLib.h"
+#include "../../libzway/ZLogging.h"
+
 using namespace OpenZWave;
 
 Manager* Manager::s_instance = NULL;
@@ -71,6 +74,17 @@ extern uint16_t ozw_vers_major;
 extern uint16_t ozw_vers_minor;
 extern uint16_t ozw_vers_revision;
 extern char ozw_version_string[];
+
+void z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg)
+{
+	Manager::Get()->m_notificationMutex->Lock();
+	for (list<Watcher*>::iterator it = m_watchers.begin(); it != m_watchers.end(); ++it)
+	{
+		// ...
+		//(*it)->m_callback('notification', (*it)->m_context); // TODO
+	}
+	Manager::Get()->m_notificationMutex->Unlock();
+}
 
 //-----------------------------------------------------------------------------
 //	Construction
@@ -92,10 +106,13 @@ Manager* Manager::Create()
 		return s_instance;
 	}
 
+
+
 	// Options have not been created and locked.
 	Log::Create("", false, true, LogLevel_Debug, LogLevel_Debug, LogLevel_None);
 	Log::Write(LogLevel_Error, "Options have not been created and locked. Exiting...");
 	OZW_FATAL_ERROR(OZWException::OZWEXCEPTION_OPTIONS, "Options Not Created and Locked");
+
 	return NULL;
 }
 
@@ -331,9 +348,26 @@ bool Manager::AddDriver(string const& _controllerPath, Driver::ControllerInterfa
 		}
 	}
 
+	// // char *str = (char *)malloc(sizeof(char) * _controllerPath.length());
+	// // for (unsigned int i = 0; i < _controllerPath.length(); ++i)
+	// // 	str[i] = _controllerPath[i];
+	// ZWay zway = NULL;
+	// ZWError r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
+	// if (r != NoError)
+ //    {
+	// 	printf("AddDriver()-not OK!\n");
+ //    }
+ //    else
+ //    {
+ //    	s_instance->zways.push_back(zway);
+ //    }
+ //    // free(str);
+
 	Driver* driver = new Driver(_controllerPath, _interface);
 	m_pendingDrivers.push_back(driver);
 	driver->Start();
+
+    zway_device_add_callback(driver->zway, DeviceAdded | DeviceRemoved | InstanceAdded | InstanceRemoved | CommandAdded | CommandRemoved, z_watcher, NULL);
 
 	Log::Write(LogLevel_Info, "mgr,     Added driver for controller %s", _controllerPath.c_str());
 	return true;
@@ -3670,7 +3704,6 @@ bool Manager::AddWatcher(pfnOnNotification_t _watcher, void* _context)
 			return false;
 		}
 	}
-
 	m_watchers.push_back(new Watcher(_watcher, _context));
 	m_notificationMutex->Unlock();
 	return true;

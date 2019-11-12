@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<devicesData>
+ <controller>
+  <data name="controller.data" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+   <data name="nodeId" invalidateTime="1573138605" updateTime="1573138606" type="int" value="1"/>
+   <data name="homeId" invalidateTime="1573138605" updateTime="1573138606" type="int" value="-203259472"/>
+   <data name="SUCNodeId" invalidateTime="1573138605" updateTime="1573138606" type="int" value="1"/>
+   <data name="isPrimary" invalidateTime="1573138605" updateTime="1573138607" type="bool" value="true"/>
+   <data name="isInOthersNetwork" invalidateTime="1573138605" updateTime="1573138607" type="bool" value="false"/>
+   <data name="isRealPrimary" invalidateTime="1573138605" updateTime="1573138607" type="bool" value="true"/>
+   <data name="isSUC" invalidateTime="1573138605" updateTime="1573138607" type="bool" value="true"/>
+   <data name="SISPresent" invalidateTime="1573138605" updateTime="1573138607" type="bool" value="true"/>
+   <data name="libType" invalidateTime="1573138605" updateTime="1573138606" type="string" value="Static Controller"/>
+   <data name="SDK" invalidateTime="1573138605" updateTime="1573138606" type="string" value=""/>
+   <data name="ZWlibMajor" invalidateTime="1573138605" updateTime="1573138606" type="int" value="4"/>
+   <data name="ZWlibMinor" invalidateTime="1573138605" updateTime="1573138606" type="int" value="5"/>
+   <data name="ZWLib" invalidateTime="1573138605" updateTime="1573138606" type="int" value="1"/>
+   <data name="ZWVersion" invalidateTime="1573138605" updateTime="1573138607" type="int" value="5"/>
+   <data name="ZWaveChip" invalidateTime="1573138605" updateTime="1573138607" type="string" value="ZW0500"/>
+   <data name="APIVersion" invalidateTime="1573138605" updateTime="1573138606" type="string" value="05.04"/>
+   <data name="APIVersionMajor" invalidateTime="1573138605" updateTime="1573138606" type="int" value="5"/>
+   <data name="APIVersionMinor" invalidateTime="1573138605" updateTime="1573138606" type="int" value="4"/>
+   <data name="manufacturerId" invalidateTime="1573138605" updateTime="1573138606" type="int" value="277"/>
+   <data name="vendor" invalidateTime="1573138605" updateTime="1573138606" type="string" value="Z-Wave.Me"/>
+   <data name="manufacturerProductType" invalidateTime="1573138605" updateTime="1573138606" type="int" value="1024"/>
+   <data name="manufacturerProductId" invalidateTime="1573138605" updateTime="1573138606" type="int" value="1"/>
+   <data name="bootloaderCRC" invalidateTime="1573138605" updateTime="1573138607" type="int" value="13481"/>
+   <data name="firmwareCRC" invalidateTime="1573138605" updateTime="1573138607" type="int" value="27559"/>
+   <data name="capabilities" invalidateTime="1573138605" updateTime="1573138606" type="int[]" value="[ 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 17, 18, 19, 20, 21, 22, 23, 24, 28, 32, 33, 34, 35, 36, 39, 40, 41, 42, 43, 44, 45, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 80, 81, 83, 84, 85, 86, 87, 94, 96, 97, 98, 99, 102, 103, 120, 128, 144, 146, 147, 152, 180, 182, 183, 184, 185, 186, 189, 190, 191, 210, 211, 212, 239, 242, 244, 245 ]"/>
+   <data name="controllerState" invalidateTime="1573138605" updateTime="1573138614" type="int" value="20"/>
+   <data name="nonManagmentJobs" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+   <data name="lastIncludedDevice" invalidateTime="1573138605" updateTime="1573138616" type="empty" value="null"/>
+   <data name="lastExcludedDevice" invalidateTime="1573138605" updateTime="1573138616" type="empty" value="null"/>
+   <data name="secureInclusion" invalidateTime="1573138605" updateTime="1573138606" type="bool" value="true"/>
+   <data name="oldSerialAPIAckTimeout10ms" invalidateTime="1573138605" updateTime="1573138606" type="int" value="150"/>
+   <data name="oldSerialAPIByteTimeout10ms" invalidateTime="1573138605" updateTime="1573138606" type="int" value="15"/>
+   <data name="curSerialAPIAckTimeout10ms" invalidateTime="1573138605" updateTime="1573138606" type="int" value="10"/>
+   <data name="curSerialAPIByteTimeout10ms" invalidateTime="1573138605" updateTime="1573138606" type="int" value="10"/>
+   <data name="countJobs" invalidateTime="1573138605" updateTime="1573138606" type="bool" value="false"/>
+   <data name="memoryGetAddress" invalidateTime="1573138605" updateTime="1573138607" type="int" value="25856"/>
+   <data name="memoryGetData" invalidateTime="1573138605" updateTime="1573138607" type="binary" value="[ 34 a9 6b a7 ]"/>
+   <data name="memoryManufacturerId" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   <data name="memoryType" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   <data name="memoryCapacity" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   <data name="functionClasses" invalidateTime="1573138605" updateTime="1573138606" type="int[]" value="[ 2, 3, 4, 5, 6, 7, 8, 11, 18, 19, 21, 22, 23, 32, 33, 34, 35, 36, 39, 41, 42, 43, 44, 45, 57, 58, 59, 63, 65, 66, 68, 70, 71, 72, 73, 74, 75, 76, 77, 80, 81, 82, 83, 84, 85, 86, 87, 94, 96, 97, 98, 99, 128, 146, 147, 186, 190, 208, 209, 210, 211, 242, 243, 244, 245 ]"/>
+   <data name="functionClassesNames" invalidateTime="1573138605" updateTime="1573138606" type="string[]" value="[ &quot;SerialAPIGetInitData&quot;, &quot;SerialAPIApplicationNodeInformation&quot;, &quot;ApplicationCommandHandler&quot;, &quot;GetControllerCapabilities&quot;, &quot;SerialAPISetTimeouts&quot;, &quot;GetSerialAPICapabilities&quot;, &quot;SerialAPISoftReset&quot;, &quot;SerialAPISetup&quot;, &quot;SendNodeInformation&quot;, &quot;SendData&quot;, &quot;GetVersion&quot;, &quot;SendDataAbort&quot;, &quot;RFPowerLevelSet&quot;, &quot;GetHomeId&quot;, &quot;MemoryGetByte&quot;, &quot;MemoryPutByte&quot;, &quot;MemoryGetBuffer&quot;, &quot;MemoryPutBuffer&quot;, &quot;FlashAutoProgSet&quot;, &quot;NVMGetId&quot;, &quot;NVMExtReadLongBuffer&quot;, &quot;NVMExtWriteLongBuffer&quot;, &quot;NVMExtReadLongByte&quot;, &quot;NVMExtWriteLongByte&quot;, &quot;ClearNetworkStats&quot;, &quot;GetNetworkStats&quot;, &quot;GetBackgroundRSSI&quot;, &quot;RemoveNodeIdFromNetwork&quot;, &quot;GetNodeProtocolInformation&quot;, &quot;SetDefault&quot;, &quot;ReplicationReceiveComplete&quot;, &quot;AssignReturnRoute&quot;, &quot;DeleteReturnRoute&quot;, &quot;RequestNodeNeighbourUpdate&quot;, &quot;ApplicationNodeUpdate&quot;, &quot;AddNodeToNetwork&quot;, &quot;RemoveNodeFromNetwork&quot;, &quot;CreateNewPrimary&quot;, &quot;ControllerChange&quot;, &quot;SetLearnMode&quot;, &quot;AssignSUCReturnRoute&quot;, &quot;EnableSUC&quot;, &quot;RequestNetworkUpdate&quot;, &quot;SetSUCNodeId&quot;, &quot;DeleteSUCReturnRoute&quot;, &quot;GetSUCNodeId&quot;, &quot;SendSUCNodeId&quot;, &quot;ExploreRequestInclusion&quot;, &quot;RequestNodeInformation&quot;, &quot;RemoveFailedNode&quot;, &quot;IsFailedNode&quot;, &quot;ReplaceFailedNode&quot;, &quot;GetRoutingTableLine&quot;, &quot;GetPriorityRoute&quot;, &quot;SetPriorityRoute&quot;, &quot;RFPowerLevelGet&quot;, &quot;SendTestFrame&quot;, &quot;SetPromiscuousMode&quot;, &quot;PromiscuousCommandHandler&quot;, &quot;WatchDogStart&quot;, &quot;WatchDogStop&quot;, &quot;ZMEFreqChange&quot;, &quot;ZMERestore&quot;, &quot;ZMEBootloaderFlash&quot;, &quot;ZMECapabilities&quot; ]"/>
+   <data name="softwareRevisionVersion" invalidateTime="1573138605" updateTime="1573138606" type="string" value="v3.0.0-rc15"/>
+   <data name="softwareRevisionId" invalidateTime="1573138605" updateTime="1573138606" type="string" value="ca1ded3f44c7980ad887246e15c19848882dca11"/>
+   <data name="softwareRevisionDate" invalidateTime="1573138605" updateTime="1573138606" type="string" value="2018-07-07 04:15:30 +0300"/>
+   <data name="uuid" invalidateTime="1573138605" updateTime="1573138606" type="string" value="55a2f48e400a6e39647d8214e53ec374"/>
+   <data name="caps" invalidateTime="1573138605" updateTime="1573138606" type="binary" value="[ ff 01 ff 05 ]"/>
+   <data name="capsNonce" invalidateTime="1573138605" updateTime="1573138606" type="binary" value="[ 00 00 00 00 ]"/>
+   <data name="countDown" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+   <data name="frequency" invalidateTime="1573138605" updateTime="1573138606" type="string" value="EU"/>
+   <data name="deviceRelaxDelay" invalidateTime="1573138605" updateTime="1573138606" type="int" value="5"/>
+   <data name="incomingPacket" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+    <data name="nodeId" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="dstNodeId" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="securePayload" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="RSSI" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="frameType" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   </data>
+   <data name="outgoingPacket" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+    <data name="delivered" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="deliveryTime" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="packetLength" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="nodeId" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="returnRSSI" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="hops" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="returnChannel" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="txChannel" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="speed" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="schemeState" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="tries" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="lastFailPath" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    <data name="securePayload" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   </data>
+   <data name="statistics" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+    <data name="backgroundRSSI" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+     <data name="channel1" invalidateTime="1573138605" updateTime="1573138606" type="int" value="127"/>
+     <data name="channel2" invalidateTime="1573138605" updateTime="1573138606" type="int" value="127"/>
+     <data name="channel3" invalidateTime="1573138605" updateTime="1573138606" type="int" value="127"/>
+    </data>
+    <data name="RFTxFrames" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="RFTxLBTBackOffs" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="RFRxFrames" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="RFRxLRCErrors" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="RFRxCRC16Errors" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="RFRxForeignHomeID" invalidateTime="1573138605" updateTime="1573138606" type="int" value="0"/>
+    <data name="priorityRoute" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+     <data name="dstNodeId" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+     <data name="routeType" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+     <data name="speed" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+     <data name="hops" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+    </data>
+   </data>
+   <data name="homeName" invalidateTime="1573132071" updateTime="1573132072" type="string" value=""/>
+   <data name="homeNotes" invalidateTime="1573132071" updateTime="1573132072" type="string" value=""/>
+   <data name="smartStart" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null">
+    <data name="dskProvisioningList" invalidateTime="1573138605" updateTime="1573138606" type="empty" value="null"/>
+   </data>
+  </data>
+ </controller>
+</devicesData>

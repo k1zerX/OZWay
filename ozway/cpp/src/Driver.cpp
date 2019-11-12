@@ -161,6 +161,12 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 
 	CheckMFSConfigRevision();
 
+	ZWError r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
+	if (r != NoError)
+    {
+		printf("AddDriver()-not OK!\n");
+    }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -296,6 +302,7 @@ Driver::~Driver()
 	delete this->AuthKey;
 	delete this->EncryptKey;
 	delete this->m_httpClient;
+	zway_terminate(&zway);
 }
 
 //-----------------------------------------------------------------------------

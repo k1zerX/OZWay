@@ -40,6 +40,9 @@
 #include "Group.h"
 #include "value_classes/ValueID.h"
 
+#include "../../libzway/ZWayLib.h"
+#include "../../libzway/ZLogging.h"
+
 namespace OpenZWave
 {
 	namespace Internal
@@ -181,6 +184,7 @@ namespace OpenZWave
 
 			bool m_exit;										// Flag indicating that program exit is in progress.
 			static Manager* s_instance;									// Pointer to the instance of the Manager singleton.
+			void z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg);
 
 			//-----------------------------------------------------------------------------
 			// Configuration

@@ -149,6 +149,12 @@ else
 FMTCMD = fmt -1
 endif
 
+# ZWay
+LIBZWAY = $(top_builddir)/libzway/
+LDFLAGS += -L$(LIBZWAY)
+CFLAGS += -I$(LIBZWAY)
+LIBS += -lzway -lzcommons -lpthread -lxml2 -lz -lzs2 -lm -lcrypto -larchive
+
 $(OBJDIR)/%.o : %.cpp
 	@echo "Building $(<:$(top_builddir)/cpp/%=%)"
 	@$(CXX) -MM $(CFLAGS) $(CPPFLAGS) $(INCLUDES) $< > $(DEPDIR)/$*.d

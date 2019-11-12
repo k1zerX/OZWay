@@ -42,6 +42,9 @@
 #include "platform/TimeStamp.h"
 #include "aes/aescpp.h"
 
+#include "../../libzway/ZWayLib.h"
+#include "../../libzway/ZLogging.h"
+
 namespace OpenZWave
 {
 	class Notification;
@@ -119,6 +122,7 @@ namespace OpenZWave
 			// Construction / Destruction
 			//-----------------------------------------------------------------------------
 		private:
+			ZWay zway = NULL;
 			/**
 			 *  Creates threads, events and initializes member variables and the node array.
 			 */

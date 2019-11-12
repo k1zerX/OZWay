@@ -148,7 +148,6 @@ pform := $(notdir $(wildcard $(top_srcdir)/cpp/src/platform/*.cpp)) \
 indep := $(notdir $(filter-out $(top_srcdir)/cpp/src/vers.cpp, $(wildcard $(top_srcdir)/cpp/src/*.cpp)))
 aes := $(notdir $(wildcard $(top_srcdir)/cpp/src/aes/*.c))
 
-
 default: printversion $(LIBDIR)/libopenzwave.a $(LIBDIR)/$(SHARED_LIB_NAME) $(top_builddir)/ozw_config
 
 clean:
@@ -205,6 +204,10 @@ $(LIBDIR)/$(SHARED_LIB_NAME):	$(patsubst %.cpp,$(OBJDIR)/%.o,$(tinyxml)) \
 			$(patsubst %.cpp,$(OBJDIR)/%.o,$(pform)) \
 			$(patsubst %.cpp,$(OBJDIR)/%.o,$(indep)) \
 			$(OBJDIR)/vers.o
+	@echo "**********************"
+	@echo $(LDFLAGS)
+	@echo $(LIBS)
+	@echo "**********************"
 	@echo "Linking Shared Library"
 	@$(LD) $(LDFLAGS) $(TARCH) -o $@ $+ $(LIBS)
 	@ln -sf $(SHARED_LIB_NAME) $(LIBDIR)/$(SHARED_LIB_UNVERSIONED)
