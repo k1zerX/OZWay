@@ -261,7 +261,7 @@ int main(int argc, char* argv[])
     printf("\n Creating Options \n");
 
 
-    Options::Create( "/home/aamzwave/OZWay/meta", "./meta/", "" );
+    Options::Create( "/home/aamzwave/OZWay/config", "./meta/", "" );
     Options::Get()->AddOptionInt( "SaveLogLevel", LogLevel_Detail );
     Options::Get()->AddOptionInt( "QueueLogLevel", LogLevel_Debug );
     Options::Get()->AddOptionInt( "DumpTrigger", LogLevel_Error );

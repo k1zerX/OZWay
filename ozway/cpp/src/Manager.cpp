@@ -98,17 +98,18 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 //-----------------------------------------------------------------------------
 Manager* Manager::Create()
 {
-
 	if (Options::Get() && Options::Get()->AreLocked())
 	{
 		if ( NULL == s_instance)
 		{
 			s_instance = new Manager();
 		}
+		// ZSA begin
+		Get()->m_logger = zlog_create(stdout, Debug);
+		//ZSA end
+
 		return s_instance;
 	}
-
-
 
 	// Options have not been created and locked.
 	Log::Create("", false, true, LogLevel_Debug, LogLevel_Debug, LogLevel_None);
@@ -352,7 +353,8 @@ bool Manager::AddDriver(string const& _controllerPath, Driver::ControllerInterfa
 
 	Driver* driver = new Driver(_controllerPath, _interface);
 	m_pendingDrivers.push_back(driver);
-	driver->Start();
+	// if (!driver->Start(_controllerPath))
+	// 	return false;
 	// ZSA begin
     zway_device_add_callback(driver->zway, DeviceAdded | DeviceRemoved | InstanceAdded | InstanceRemoved | CommandAdded | CommandRemoved, z_watcher, NULL);
     // ZSA end

@@ -130,66 +130,74 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 				0), m_nondelivery(0), m_routedbusy(0), m_broadcastReadCnt(0), m_broadcastWriteCnt(0), AuthKey(0), EncryptKey(0), m_nonceReportSent(0), m_nonceReportSentAttempt(0), m_queueMsgEvent(new Internal::Platform::Event()), m_eventMutex(new Internal::Platform::Mutex())
 {
 	// set a timestamp to indicate when this driver started
-	Internal::Platform::TimeStamp m_startTime;
+// 	Internal::Platform::TimeStamp m_startTime;
 
-	// Create the message queue events
-	for (int32 i = 0; i < MsgQueue_Count; ++i)
-	{
-		m_queueEvent[i] = new Internal::Platform::Event();
-	}
+// 	// Create the message queue events
+// 	for (int32 i = 0; i < MsgQueue_Count; ++i)
+// 	{
+// 		m_queueEvent[i] = new Internal::Platform::Event();
+// 	}
 
-	// Clear the nodes array
-	memset(m_nodes, 0, sizeof(Node*) * 256);
+// 	// Clear the nodes array
+// 	memset(m_nodes, 0, sizeof(Node*) * 256);
 
-	// Clear the virtual neighbors array
-	memset(m_virtualNeighbors, 0, NUM_NODE_BITFIELD_BYTES);
+// 	// Clear the virtual neighbors array
+// 	memset(m_virtualNeighbors, 0, NUM_NODE_BITFIELD_BYTES);
 
-	// Initialize the Network Keys
+// 	// Initialize the Network Keys
 
-	initNetworkKeys(false);
+// 	initNetworkKeys(false);
 
-#ifdef USE_HID
-	if( ControllerInterface_Hid == _interface )
-	{
-		m_controller = new Internal::Platform::HidController();
-	}
-	else
-#endif
-	{
-		m_controller = new Internal::Platform::SerialController();
-	}
-	m_controller->SetSignalThreshold(1);
+// #ifdef USE_HID
+// 	if( ControllerInterface_Hid == _interface )
+// 	{
+// 		m_controller = new Internal::Platform::HidController();
+// 	}
+// 	else
+// #endif
+// 	{
+// 		m_controller = new Internal::Platform::SerialController();
+// 	}
+// 	m_controller->SetSignalThreshold(1);
 
-	Options::Get()->GetOptionAsBool("NotifyTransactions", &m_notifytransactions);
-	Options::Get()->GetOptionAsInt("PollInterval", &m_pollInterval);
-	Options::Get()->GetOptionAsBool("IntervalBetweenPolls", &m_bIntervalBetweenPolls);
+// 	Options::Get()->GetOptionAsBool("NotifyTransactions", &m_notifytransactions);
+// 	Options::Get()->GetOptionAsInt("PollInterval", &m_pollInterval);
+// 	Options::Get()->GetOptionAsBool("IntervalBetweenPolls", &m_bIntervalBetweenPolls);
 
-	m_httpClient = new Internal::HttpClient(this);
+// 	m_httpClient = new Internal::HttpClient(this);
 
-	m_mfs = Internal::ManufacturerSpecificDB::Create();
+// 	m_mfs = Internal::ManufacturerSpecificDB::Create();
 
-	CheckMFSConfigRevision();
+// 	CheckMFSConfigRevision();
 
+	// ZSA begin
+	// TODO exceptions
 	ZWError r;
-	r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
+	// printf("%p\n", Manager::Get()->m_logger);
+	r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL, Manager::Get()->m_logger);
 	if (r != NoError)
     {
 		printf(">> Adding driver error: %s\n", zstrerror(r));
+		return;
     }
     r = zway_start(zway, print_zway_terminated, NULL);
     if (r != NoError)
     {
 		printf(">> Driver starting error: %s\n", zstrerror(r));
+		return;
     }
     r = zway_discover(zway);
     if (r != NoError)
     {
 		printf(">> Driver discovering error: %s\n", zstrerror(r));
+		return;
     }
 
+    // Getting HomeID 
     zdata_acquire_lock(ZDataRoot(zway));
     zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&homeId);
     zdata_release_lock(ZDataRoot(zway));
+    //ZSA end
 }
 
 //-----------------------------------------------------------------------------
@@ -325,8 +333,8 @@ Driver::~Driver()
 	delete this->AuthKey;
 	delete this->EncryptKey;
 	delete this->m_httpClient;
-	printf("NO ERROR\n");
-
+	
+	// ZSA begin
 	ZWError r;
     r = zway_stop(zway);
     if (r != NoError)
@@ -334,6 +342,7 @@ Driver::~Driver()
 		printf(">> Driver stopping error: %s\n", zstrerror(r));
     }
 	zway_terminate(&zway);
+	// ZSA end
 }
 
 //-----------------------------------------------------------------------------
@@ -343,9 +352,9 @@ Driver::~Driver()
 void Driver::Start()
 {
 	// Start the thread that will handle communications with the Z-Wave network
-	m_driverThread->Start(Driver::DriverThreadEntryPoint, this);
-	m_dnsThread->Start(Internal::DNSThread::DNSThreadEntryPoint, m_dns);
-	m_timerThread->Start(Internal::TimerThread::TimerThreadEntryPoint, m_timer);
+	// m_driverThread->Start(Driver::DriverThreadEntryPoint, this);
+	// m_dnsThread->Start(Internal::DNSThread::DNSThreadEntryPoint, m_dns);
+	// m_timerThread->Start(Internal::TimerThread::TimerThreadEntryPoint, m_timer);
 }
 
 //-----------------------------------------------------------------------------
