@@ -42,8 +42,8 @@
 #include "platform/TimeStamp.h"
 #include "aes/aescpp.h"
 
-#include "../../libzway/ZWayLib.h"
-#include "../../libzway/ZLogging.h"
+#include "ZWayLib.h"
+#include "ZLogging.h"
 
 namespace OpenZWave
 {
@@ -108,6 +108,13 @@ namespace OpenZWave
 			friend class TimerThread;
 
 			//-----------------------------------------------------------------------------
+			// ZWay
+			//-----------------------------------------------------------------------------
+		private:
+			ZWay zway = NULL;
+			uint32 homeId;
+
+			//-----------------------------------------------------------------------------
 			//	Controller Interfaces
 			//-----------------------------------------------------------------------------
 		public:
@@ -122,7 +129,6 @@ namespace OpenZWave
 			// Construction / Destruction
 			//-----------------------------------------------------------------------------
 		private:
-			ZWay zway = NULL;
 			/**
 			 *  Creates threads, events and initializes member variables and the node array.
 			 */

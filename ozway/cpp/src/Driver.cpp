@@ -24,6 +24,7 @@
 //	along with OpenZWave.  If not, see <http://www.gnu.org/licenses/>.
 //
 //-----------------------------------------------------------------------------
+
 #include "Defs.h"
 #include "Driver.h"
 #include "Options.h"
@@ -79,7 +80,15 @@
 #include <sstream>
 #include <iomanip>
 
+#include "ZWayLib.h"
+#include "ZLogging.h"
+
 using namespace OpenZWave;
+
+void print_zway_terminated(ZWay zway, void* arg)
+{
+	printf("||| zway_terminated |||\n");
+}
 
 // Version numbering for saved configurations. Any change that will invalidate
 // previously saved configurations must be accompanied by an increment to the
@@ -161,12 +170,26 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 
 	CheckMFSConfigRevision();
 
-	ZWError r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
+	ZWError r;
+	r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
 	if (r != NoError)
     {
-		printf("AddDriver()-not OK!\n");
+		printf(">> Adding driver error: %s\n", zstrerror(r));
+    }
+    r = zway_start(zway, print_zway_terminated, NULL);
+    if (r != NoError)
+    {
+		printf(">> Driver starting error: %s\n", zstrerror(r));
+    }
+    r = zway_discover(zway);
+    if (r != NoError)
+    {
+		printf(">> Driver discovering error: %s\n", zstrerror(r));
     }
 
+    //zdata_acquire_lock(ZDataRoot(zway));
+    //zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&homeId);
+    //zdata_release_lock(ZDataRoot(zway));
 }
 
 //-----------------------------------------------------------------------------
@@ -302,6 +325,14 @@ Driver::~Driver()
 	delete this->AuthKey;
 	delete this->EncryptKey;
 	delete this->m_httpClient;
+	printf("NO ERROR\n");
+
+	ZWError r;
+    r = zway_stop(zway);
+    if (r != NoError)
+    {
+		printf(">> Driver stopping error: %s\n", zstrerror(r));
+    }
 	zway_terminate(&zway);
 }
 

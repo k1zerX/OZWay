@@ -150,7 +150,7 @@ FMTCMD = fmt -1
 endif
 
 # ZWay
-LIBZWAY = $(top_builddir)/libzway/
+LIBZWAY = $(top_builddir)/libzway
 LDFLAGS += -L$(LIBZWAY)
 CFLAGS += -I$(LIBZWAY)
 LIBS += -lzway -lzcommons -lpthread -lxml2 -lz -lzs2 -lm -lcrypto -larchive

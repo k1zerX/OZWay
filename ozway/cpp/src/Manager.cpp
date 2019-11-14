@@ -64,8 +64,8 @@
 #include "value_classes/ValueString.h"
 #include "value_classes/ValueBitSet.h"
 
-#include "../../libzway/ZWayLib.h"
-#include "../../libzway/ZLogging.h"
+#include "ZWayLib.h"
+#include "ZLogging.h"
 
 using namespace OpenZWave;
 
@@ -75,10 +75,10 @@ extern uint16_t ozw_vers_minor;
 extern uint16_t ozw_vers_revision;
 extern char ozw_version_string[];
 
-void z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg)
+void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg)
 {
 	Manager::Get()->m_notificationMutex->Lock();
-	for (list<Watcher*>::iterator it = m_watchers.begin(); it != m_watchers.end(); ++it)
+	for (list<Watcher*>::iterator it = Manager::Get()->m_watchers.begin(); it != Manager::Get()->m_watchers.end(); ++it)
 	{
 		// ...
 		//(*it)->m_callback('notification', (*it)->m_context); // TODO

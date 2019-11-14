@@ -5,11 +5,11 @@ OUT      = $(addsuffix .out,$(PROJECTS))
 OBJ      = $(addsuffix .o,$(PROJECTS))
 OZWAY    = ozway
 CC       = g++
-SRCDIR   = $(OZWAY)/cpp/src/
-IFLAGS   = -I $(SRCDIR)                \
-           -I $(SRCDIR)command_classes \
-           -I $(SRCDIR)platform        \
-           -I $(SRCDIR)value_classes
+IFLAGS   = -I $(OZWAY)/cpp/src                \
+           -I $(OZWAY)/cpp/src/command_classes \
+           -I $(OZWAY)/cpp/src/platform        \
+           -I $(OZWAY)/cpp/src/value_classes   \
+           -I $(OZWAY)/libzway
 LIBS     = -lopenzwave \
 	   -lzway \
 	   -lzcommons \

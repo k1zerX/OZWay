@@ -247,7 +247,7 @@ void SetValue(bool value)
 
 int main(int argc, char* argv[])
 {
-    string port = "/dev/ttyACM0";
+    string port = "/dev/ttyACM1";
     pthread_mutexattr_t mutexattr;
 
    // Set up mutual exclusion so that this thread has priority
