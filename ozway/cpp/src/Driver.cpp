@@ -187,9 +187,9 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 		printf(">> Driver discovering error: %s\n", zstrerror(r));
     }
 
-    //zdata_acquire_lock(ZDataRoot(zway));
-    //zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&homeId);
-    //zdata_release_lock(ZDataRoot(zway));
+    zdata_acquire_lock(ZDataRoot(zway));
+    zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&homeId);
+    zdata_release_lock(ZDataRoot(zway));
 }
 
 //-----------------------------------------------------------------------------

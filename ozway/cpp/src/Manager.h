@@ -122,8 +122,9 @@ namespace OpenZWave
 			// ZWay
 			//-----------------------------------------------------------------------------
 		private:
+			// ZSA begin
 			static void z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg);
-
+			// ZSA end
 		public:
 			typedef void (*pfnOnNotification_t)(Notification const* _pNotification, void* _context);
 

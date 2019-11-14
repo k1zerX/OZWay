@@ -75,6 +75,7 @@ extern uint16_t ozw_vers_minor;
 extern uint16_t ozw_vers_revision;
 extern char ozw_version_string[];
 
+// ZSA begin
 void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg)
 {
 	Manager::Get()->m_notificationMutex->Lock();
@@ -85,6 +86,7 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 	}
 	Manager::Get()->m_notificationMutex->Unlock();
 }
+// ZSA end
 
 //-----------------------------------------------------------------------------
 //	Construction
@@ -348,27 +350,12 @@ bool Manager::AddDriver(string const& _controllerPath, Driver::ControllerInterfa
 		}
 	}
 
-	// // char *str = (char *)malloc(sizeof(char) * _controllerPath.length());
-	// // for (unsigned int i = 0; i < _controllerPath.length(); ++i)
-	// // 	str[i] = _controllerPath[i];
-	// ZWay zway = NULL;
-	// ZWError r = zway_init(&zway, ZSTR(_controllerPath.c_str()), NULL, NULL, NULL, NULL,NULL);
-	// if (r != NoError)
- //    {
-	// 	printf("AddDriver()-not OK!\n");
- //    }
- //    else
- //    {
- //    	s_instance->zways.push_back(zway);
- //    }
- //    // free(str);
-
 	Driver* driver = new Driver(_controllerPath, _interface);
 	m_pendingDrivers.push_back(driver);
 	driver->Start();
-
+	// ZSA begin
     zway_device_add_callback(driver->zway, DeviceAdded | DeviceRemoved | InstanceAdded | InstanceRemoved | CommandAdded | CommandRemoved, z_watcher, NULL);
-
+    // ZSA end
 	Log::Write(LogLevel_Info, "mgr,     Added driver for controller %s", _controllerPath.c_str());
 	return true;
 }
