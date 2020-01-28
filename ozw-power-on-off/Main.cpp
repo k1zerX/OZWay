@@ -69,12 +69,17 @@ void OnNotification
 )
 {
 	// Must do this inside a critical section to avoid conflicts with the main thread
-	pthread_mutex_lock( &g_criticalSection );
+	// pthread_mutex_lock( &g_criticalSection );
+
+    printf(">>> OnNotification %d\n", _notification->GetType());
 
 	switch( _notification->GetType() )
 	{
 		case Notification::Type_ValueAdded:
 		{
+			printf("command added: %x\n", _notification->GetValueID().GetCommandClassId());
+			if (_notification->GetValueID().GetCommandClassId() == 0x25)
+				printf("\tITS OK");
 			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
 			{
 				// Add the new value to our list
@@ -127,6 +132,7 @@ void OnNotification
 			nodeInfo->m_homeId = _notification->GetHomeId();
 			nodeInfo->m_nodeId = _notification->GetNodeId();
 			nodeInfo->m_polled = false;
+			printf("home: %d, node: %d\n", nodeInfo->m_homeId, nodeInfo->m_nodeId);
 			g_nodes.push_back( nodeInfo );
 			break;
 		}
@@ -209,21 +215,24 @@ void OnNotification
 		}
 	}
 
-	pthread_mutex_unlock( &g_criticalSection );
+	// pthread_mutex_unlock( &g_criticalSection );
 }
 
 void SetValue(bool value)
 {
-    int nodeid = 2;
-    pthread_mutex_lock( &g_criticalSection );
+    int nodeid = 3;
+    // pthread_mutex_lock( &g_criticalSection );
+    printf("START\n");
     for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
     {
 	NodeInfo* nodeInfo = *it;
+	printf("==== %d\n", nodeInfo->m_nodeId);
 	if( nodeInfo->m_nodeId != nodeid ) continue;
 	for( list<ValueID>::iterator it2 = nodeInfo->m_values.begin();
  it2 != nodeInfo->m_values.end(); ++it2 )
 	{
 	    ValueID v = *it2;
+		printf("yeah %x\n", v.GetCommandClassId());
 	    if( v.GetCommandClassId() == 0x25)
 	    {
 		bool status;
@@ -242,26 +251,26 @@ void SetValue(bool value)
 	}
     }
 
-    pthread_mutex_unlock( &g_criticalSection );
+    // pthread_mutex_unlock( &g_criticalSection );
 }
 
 int main(int argc, char* argv[])
 {
-    string port = "/dev/ttyACM1";
-    pthread_mutexattr_t mutexattr;
+    string port = "/dev/ttyACM0";
+   //  pthread_mutexattr_t mutexattr;
 
-   // Set up mutual exclusion so that this thread has priority
-    pthread_mutexattr_init ( &mutexattr );
-    pthread_mutexattr_settype( &mutexattr, PTHREAD_MUTEX_RECURSIVE );
-    pthread_mutex_init( &g_criticalSection, &mutexattr );
-    pthread_mutexattr_destroy( &mutexattr );
+   // // Set up mutual exclusion so that this thread has priority
+   //  pthread_mutexattr_init ( &mutexattr );
+   //  pthread_mutexattr_settype( &mutexattr, PTHREAD_MUTEX_RECURSIVE );
+   //  pthread_mutex_init( &g_criticalSection, &mutexattr );
+   //  pthread_mutexattr_destroy( &mutexattr );
 
-    pthread_mutex_lock( &initMutex );
+   //  pthread_mutex_lock( &initMutex );
 
     printf("\n Creating Options \n");
 
 
-    Options::Create( "/home/aamzwave/OZWay/config", "./meta/", "" );
+    Options::Create( "./ozway/config", "./meta/", "" );
     Options::Get()->AddOptionInt( "SaveLogLevel", LogLevel_Detail );
     Options::Get()->AddOptionInt( "QueueLogLevel", LogLevel_Debug );
     Options::Get()->AddOptionInt( "DumpTrigger", LogLevel_Error );
@@ -283,7 +292,7 @@ int main(int argc, char* argv[])
 
 
     // Release the critical section
-    pthread_cond_wait( &initCond, &initMutex );
+    // pthread_cond_wait( &initCond, &initMutex );
 
     printf("\n Starting On/Off Program \n");
 
@@ -310,7 +319,7 @@ int main(int argc, char* argv[])
     Manager::Get()->RemoveWatcher( OnNotification, NULL );
     Manager::Destroy();
     Options::Destroy();
-    pthread_mutex_destroy( &g_criticalSection );
+    // pthread_mutex_destroy( &g_criticalSection );
 
     return 0;
 }

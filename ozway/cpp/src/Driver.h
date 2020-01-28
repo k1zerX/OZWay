@@ -112,8 +112,7 @@ namespace OpenZWave
 			//-----------------------------------------------------------------------------
 			// ZSA begin
 		private:
-			ZWay zway = NULL;
-			uint32 homeId;
+			ZWay zway = NULL; // TODO change to m_zway
 			// ZSA end
 
 			//-----------------------------------------------------------------------------

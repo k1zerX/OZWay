@@ -87,6 +87,7 @@ using namespace OpenZWave;
 
 void print_zway_terminated(ZWay zway, void* arg)
 {
+	printf("%p",zway);
 	printf("||| zway_terminated |||\n");
 }
 
@@ -129,7 +130,7 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 		m_currentControllerCommand( NULL), m_SUCNodeId(0), m_controllerResetEvent( NULL), m_sendMutex(new Internal::Platform::Mutex()), m_currentMsg( NULL), m_virtualNeighborsReceived(false), m_notificationsEvent(new Internal::Platform::Event()), m_SOFCnt(0), m_ACKWaiting(0), m_readAborts(0), m_badChecksum(0), m_readCnt(0), m_writeCnt(0), m_CANCnt(0), m_NAKCnt(0), m_ACKCnt(0), m_OOFCnt(0), m_dropped(0), m_retries(0), m_callbacks(0), m_badroutes(0), m_noack(0), m_netbusy(0), m_notidle(0), m_txverified(
 				0), m_nondelivery(0), m_routedbusy(0), m_broadcastReadCnt(0), m_broadcastWriteCnt(0), AuthKey(0), EncryptKey(0), m_nonceReportSent(0), m_nonceReportSentAttempt(0), m_queueMsgEvent(new Internal::Platform::Event()), m_eventMutex(new Internal::Platform::Mutex())
 {
-	// set a timestamp to indicate when this driver started
+// 	// set a timestamp to indicate when this driver started
 // 	Internal::Platform::TimeStamp m_startTime;
 
 // 	// Create the message queue events
@@ -193,11 +194,11 @@ Driver::Driver(string const& _controllerPath, ControllerInterface const& _interf
 		return;
     }
 
-    // Getting HomeID 
-    zdata_acquire_lock(ZDataRoot(zway));
-    zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&homeId);
-    zdata_release_lock(ZDataRoot(zway));
-    //ZSA end
+	// Getting HomeID 
+	zdata_acquire_lock(ZDataRoot(zway));
+	zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&m_homeId);
+	zdata_release_lock(ZDataRoot(zway));
+	//ZSA end
 }
 
 //-----------------------------------------------------------------------------
@@ -351,7 +352,7 @@ Driver::~Driver()
 //-----------------------------------------------------------------------------
 void Driver::Start()
 {
-	// Start the thread that will handle communications with the Z-Wave network
+	// // Start the thread that will handle communications with the Z-Wave network
 	// m_driverThread->Start(Driver::DriverThreadEntryPoint, this);
 	// m_dnsThread->Start(Internal::DNSThread::DNSThreadEntryPoint, m_dns);
 	// m_timerThread->Start(Internal::TimerThread::TimerThreadEntryPoint, m_timer);
