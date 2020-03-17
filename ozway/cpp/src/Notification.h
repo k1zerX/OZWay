@@ -308,33 +308,6 @@ namespace OpenZWave
 					m_type(_type), m_byte(0), m_event(0), m_command(0), m_useralerttype(Alert_None)
 			{
 			}
-			// ZSA begin
-			Notification(ZWDeviceChangeType _type) :
-					m_byte(0), m_event(0), m_command(0), m_useralerttype(Alert_None)
-			{
-				_type &= ~EnumerateExisting;
-				m_type = Type_ValueAdded;
-				printf("%d ==> ", _type);
-				switch (_type) // TODO правильно соотнести типы
-				{
-					case DeviceAdded:
-						m_type = Type_NodeAdded;
-						break;
-					case DeviceRemoved:
-						m_type = Type_NodeRemoved;
-						break;
-					case InstanceAdded:
-						break;
-					case InstanceRemoved:
-						break;
-					case CommandAdded:
-						break;
-					case CommandRemoved:
-						break;
-				}
-				printf("%d\n", m_type);
-			}
-			// ZSA end
 			~Notification()
 			{
 			}

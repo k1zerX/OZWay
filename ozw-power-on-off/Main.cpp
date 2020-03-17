@@ -71,15 +71,12 @@ void OnNotification
 	// Must do this inside a critical section to avoid conflicts with the main thread
 	// pthread_mutex_lock( &g_criticalSection );
 
-    printf(">>> OnNotification %d\n", _notification->GetType());
+	cout << _notification->GetAsString() << endl;
 
 	switch( _notification->GetType() )
 	{
 		case Notification::Type_ValueAdded:
 		{
-			printf("command added: %x\n", _notification->GetValueID().GetCommandClassId());
-			if (_notification->GetValueID().GetCommandClassId() == 0x25)
-				printf("\tITS OK");
 			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
 			{
 				// Add the new value to our list
@@ -111,6 +108,7 @@ void OnNotification
 			if( NodeInfo* nodeInfo = GetNodeInfo( _notification ) )
 			{
 				nodeInfo = nodeInfo;		// placeholder for real action
+				printf("hello\n");
 			}
 			break;
 		}
@@ -220,19 +218,16 @@ void OnNotification
 
 void SetValue(bool value)
 {
-    int nodeid = 3;
+    int nodeid = 5;
     // pthread_mutex_lock( &g_criticalSection );
-    printf("START\n");
     for( list<NodeInfo*>::iterator it = g_nodes.begin(); it != g_nodes.end(); ++it )
     {
 	NodeInfo* nodeInfo = *it;
-	printf("==== %d\n", nodeInfo->m_nodeId);
 	if( nodeInfo->m_nodeId != nodeid ) continue;
 	for( list<ValueID>::iterator it2 = nodeInfo->m_values.begin();
  it2 != nodeInfo->m_values.end(); ++it2 )
 	{
 	    ValueID v = *it2;
-		printf("yeah %x\n", v.GetCommandClassId());
 	    if( v.GetCommandClassId() == 0x25)
 	    {
 		bool status;
@@ -297,7 +292,7 @@ int main(int argc, char* argv[])
     printf("\n Starting On/Off Program \n");
 
     // loop to switch on/off every 5 seconds
-    for (int i = 0; i < 1; i++ )
+    for (int i = 0; i < 5; i++ )
     {
       printf("\n Loop %i \n ====== \n", i+1 );
       SetValue(true);

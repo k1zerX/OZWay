@@ -42,8 +42,20 @@
 #include "platform/TimeStamp.h"
 #include "aes/aescpp.h"
 
+//ZSA
 #include "ZWayLib.h"
 #include "ZLogging.h"
+/*
+typedef struct _SwitchBinaryArg SwitchBinaryArg;
+
+struct		_SwitchBinaryArg
+{
+	uint32	home_id;
+	uint32	node_id;
+	void	*arg;
+};
+*/
+//ZSA
 
 namespace OpenZWave
 {
@@ -112,7 +124,9 @@ namespace OpenZWave
 			//-----------------------------------------------------------------------------
 			// ZSA begin
 		private:
-			ZWay zway = NULL; // TODO change to m_zway
+			ZWay zway = NULL; //TODO change to m_zway
+			//SwitchBinaryArg args[256];
+			ValueID args[256];
 			// ZSA end
 
 			//-----------------------------------------------------------------------------

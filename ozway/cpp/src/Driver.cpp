@@ -102,16 +102,17 @@ void print_zway_terminated(ZWay zway, void* arg)
 uint32 const c_configVersion = 4;
 
 static char const* c_libraryTypeNames[] =
-{ "Unknown",			// library type 0
-		"Static Controller",		// library type 1
-		"Controller",       		// library type 2
-		"Enhanced Slave",   		// library type 3
-		"Slave",            		// library type 4
-		"Installer",			// library type 5
-		"Routing Slave",		// library type 6
-		"Bridge Controller",    	// library type 7
-		"Device Under Test"		// library type 8
-		};
+{
+	"Unknown",				// library type 0
+	"Static Controller",	// library type 1
+	"Controller",       	// library type 2
+	"Enhanced Slave",   	// library type 3
+	"Slave",            	// library type 4
+	"Installer",			// library type 5
+	"Routing Slave",		// library type 6
+	"Bridge Controller",    // library type 7
+	"Device Under Test"		// library type 8
+};
 
 static char const* c_controllerCommandNames[] =
 { "None", "Add Device", "Create New Primary", "Receive Configuration", "Remove Device", "Remove Failed Node", "Has Node Failed", "Replace Failed Node", "Transfer Primary Role", "Request Network Update", "Request Node Neighbor Update", "Assign Return Route", "Delete All Return Routes", "Send Node Information", "Replication Send", "Create Button", "Delete Button" };

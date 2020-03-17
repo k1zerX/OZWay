@@ -80,7 +80,8 @@ enum _ZWDataChangeType
 };
 
 // Use this type to store Data change event type
-typedef enum _ZWDataChangeType ZWDataChangeType;
+//typedef enum _ZWDataChangeType ZWDataChangeType;
+typedef int ZWDataChangeType;
 
 // Definition of data change callback function
 typedef void (*ZDataChangeCallback)(const ZDataRootObject root, ZWDataChangeType type, ZDataHolder data, void *arg);

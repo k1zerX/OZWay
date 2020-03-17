@@ -123,6 +123,7 @@ namespace OpenZWave
 			//-----------------------------------------------------------------------------
 		private:
 			// ZSA begin
+			static void z_switch_binary_watcher(const ZDataRootObject root, ZWDataChangeType type, ZDataHolder data, void *arg);
 			static void z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id, ZWBYTE instance_id, ZWBYTE command_id, void *arg);
 			ZWLog m_logger;
 			// ZSA end
