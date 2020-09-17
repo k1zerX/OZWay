@@ -65,16 +65,19 @@
 #include "value_classes/ValueBitSet.h"
 
 // ZSA
+
 #include "Driver.h"
 
-#include "ZWayLib.h"
-#include "ZLogging.h"
-#include "ZDataExt.h"
+#include <ZWayLib.h>
+#include <ZLogging.h>
+#include <ZDataExt.h>
 
 //TODO move defines to header, handle all zway functions' errors
-#define _NOT_YET_IMPLEMENTED_(zway) zway_log((zway), Error, "The method \"%s\" is not yet implemented, in %s, line %d\n", __func__,  __FILE__, __LINE__)
-#define _NOT_SUPPORTED_(zway) zway_log((zway), Error, "The method \"%s\" is not supported, in %s, line %d\n", __func__,  __FILE__, __LINE__)
+#define _NOT_YET_IMPLEMENTED_ zlog_write(Manager::Get()->m_logger, ZSTR("zway_debug"), Critical, "The method \"%s\" is not yet implemented, in %s, line %d\n", __func__,  __FILE__, __LINE__);
+#define _NOT_SUPPORTED_ zlog_write(Manager::Get()->m_logger, ZSTR("zway_debug"), Critical, "The method \"%s\" is not supported, in %s, line %d\n", __func__,  __FILE__, __LINE__);
+
 // ZSA
+
 using namespace OpenZWave;
 
 Manager* Manager::s_instance = NULL;
@@ -139,14 +142,19 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 //	Manager::Get()->m_notificationMutex->Lock();
 	Notification *notification;
 	uint32 home_id;
+	
+	printf("\n| Z-WATCHER: type: %x, nodeId: %d, instanceId: %d, commandId: %x\n\n", type, node_id, instance_id, command_id);
 
 	zdata_acquire_lock(ZDataRoot(zway));
 	zdata_get_integer(zway_find_controller_data(zway, "homeId"), (int *)&home_id);
 	zdata_release_lock(ZDataRoot(zway));
+	if (type & EnumerateExisting)
+		printf("EnumerateExisting\n\t");
 	switch (type & (~EnumerateExisting)) // TODO QueueNotification()
 	{
 		case DeviceAdded:
 		{
+			printf("DeviceAdded\n");
 			notification = new Notification(Notification::Type_NodeAdded);
 			notification->SetHomeAndNodeIds(home_id, node_id);
 			for (list<Watcher*>::iterator it = Manager::Get()->m_watchers.begin(); it != Manager::Get()->m_watchers.end(); ++it)
@@ -156,6 +164,7 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 		}
 		case DeviceRemoved:
 		{
+			printf("DeviceRemoved\n");
 			notification = new Notification(Notification::Type_NodeRemoved);
 			notification->SetHomeAndNodeIds(home_id, node_id);
 			for (list<Watcher*>::iterator it = Manager::Get()->m_watchers.begin(); it != Manager::Get()->m_watchers.end(); ++it)
@@ -163,22 +172,26 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 //			QueueNotification(notification);
 			break;
 		}
-//TODO implement InstanceAdded & InctanceRemoved
+//TODO implement InstanceAdded & InstanceRemoved
 		case InstanceAdded:
 		{
+			printf("InstanceAdded\n");
 			break;
 		}
 		case InstanceRemoved:
 		{
+			printf("InstanceRemoved\n");
 			break;
 		}
 		case CommandAdded:
 		{
+			printf("CommandAdded: %#2x\n", command_id);
 			switch (command_id)
 			{
 //ZWEXPORT ZWError zdata_add_callback(ZDataHolder data, ZDataChangeCallback callback, ZWBOOL watch_children, void *arg);
 				case 0x25:
 				{
+					printf("abcde\n");
 					notification = new Notification(Notification::Type_ValueAdded);
 //ValueID(uint32 const _homeId, uint8 const _nodeId, ValueGenre const _genre, uint8 const _commandClassId, uint8 const _instance, uint16 const _valueIndex, ValueType const _type) :
 					notification->SetValueId(ValueID(home_id, node_id, ValueID::ValueGenre_User, command_id, instance_id, ValueID_Index_SwitchBinary::Level, ValueID::ValueType_Bool)); //TODO fix genre & valueType
@@ -193,8 +206,10 @@ void Manager::z_watcher(const ZWay zway, ZWDeviceChangeType type, ZWBYTE node_id
 		}
 		case CommandRemoved:// TODO
 		{
+			printf("CommandRemoved\n");
 			break;
 		}
+		default:
 		{
 			break;
 		}
@@ -220,6 +235,7 @@ Manager* Manager::Create()
 			s_instance = new Manager();
 		}
 		// ZSA begin
+		//FILE *file = fopen("/home/k1zerx/workspace/ozway/zlog", "w");
 		Get()->m_logger = zlog_create(stdout, Debug);
 		//ZSA end
 
@@ -2008,8 +2024,6 @@ bool Manager::GetValueAsBitSet(ValueID const& _id, uint8 _pos, bool* o_value)
 //-----------------------------------------------------------------------------
 bool Manager::GetValueAsBool(ValueID const& _id, bool* o_value)
 {
-	bool res = false;
-
 //	zdata_get_boolean(zway_find_device_instance_cc_data(zway, node_id, instance_id, 0x25, "level"), &b);
 	if (o_value)
 	{
@@ -2018,17 +2032,27 @@ bool Manager::GetValueAsBool(ValueID const& _id, bool* o_value)
 			if (Driver* driver = GetDriver(_id.GetHomeId()))
 			{
 				ZWBOOL b;
+				ZWError r;
 
 				zdata_acquire_lock(ZDataRoot(driver->zway));
-				zdata_get_boolean(zway_find_device_instance_cc_data(driver->zway, _id.GetNodeId(), _id.GetInstance(), 0x25, "level"), &b);
+				r = zdata_get_boolean(zway_find_device_instance_cc_data(driver->zway, _id.GetNodeId(), _id.GetInstance(), 0x25, "level"), &b);
 				zdata_release_lock(ZDataRoot(driver->zway));
+
+				if (r != NoError)
+				{
+					printf(">> GetValueAsBool error: %s\n", zstrerror(r));
+					return false;
+				}
+
+				printf("GET VALUE: %s\n", b ? "TRUE" : "FALSE");
 				
 				*o_value = b;
+				return true;
 			}
 		}
 	}
 
-	return res;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -2688,12 +2712,12 @@ bool Manager::SetValue(ValueID const& _id, bool const _value)
 							}
 							case ValueID_Index_SwitchBinary::TargetState:
 							{
-								_NOT_SUPPORTED_(driver->zway);
+								_NOT_SUPPORTED_
 								break;
 							}
 							case ValueID_Index_SwitchBinary::Duration:
 							{
-								_NOT_YET_IMPLEMENTED_(driver->zway);
+								_NOT_YET_IMPLEMENTED_
 								break;
 							}
 						}

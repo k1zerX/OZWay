@@ -33,8 +33,12 @@
 #include "Defs.h"
 #include "value_classes/ValueID.h"
 
-#include "ZWayLib.h"
-#include "ZLogging.h"
+// ZSA
+
+#include <ZWayLib.h>
+#include <ZLogging.h>
+
+// ZSA
 
 namespace OpenZWave
 {
