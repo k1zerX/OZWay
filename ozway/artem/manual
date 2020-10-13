@@ -1,1 +1,0 @@
-rm .lib/Main.o && g++ -shared -Wl,-soname,libopenzwave.so.1.6 -o ./libopenzwave.so.1.6 .lib/*.o -lzway
